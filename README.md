@@ -14,7 +14,7 @@ O foco principal foi validar a API pública Cat Facts API (https://catfact.ninja
 
 1. Clone o repositório:
    ```bash
-   git clone https://seu-repositorio-url.git
+   git clone https://github.com/welitaluisa/CatFactsQe
    cd seu-repositorio
 
 2. Instale as dependências:
@@ -24,9 +24,13 @@ O foco principal foi validar a API pública Cat Facts API (https://catfact.ninja
 
 ## Estrutura do Projeto
 
-features/ - Contém os arquivos de cenário Behave (features).
-steps/ - Contém os arquivos de passos que implementam os cenários de teste.
-allure/ - Relatórios gerados pelo Allure.
+test/features/ - Contém os arquivos de cenário Behave (features).
+test/steps/ - Contém os arquivos de passos que implementam os cenários de teste.
+test/allure/ - Relatórios gerados pelo Allure.
+reports/ - Contém arquivo html
+Postman/ - Contem a collection.json e o arquivo environments
+Mapa mental/ - Contém o mapa mental usado no desafio criado no XMind
+
 
 ## Como Rodar os Testes
 
