@@ -1,0 +1,1132 @@
+{
+	"info": {
+		"_postman_id": "fe9f63d0-008a-4960-bcda-9d074a2e055a",
+		"name": "Cat Fact API",
+		"description": "An API for facts about cats",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11798806"
+	},
+	"item": [
+		{
+			"name": "[CT - 01] Busca todas as raças de gato cadastrados",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"  const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida a pagina atual é igual a 1\", function () {\r",
+							"    pm.expect(responseData.current_page).to.equal(1);\r",
+							"});\r",
+							"pm.test(\"Valida a quantidade de raças retornado na página 1\", function () {\r",
+							"    pm.expect(pm.response.json().data.length).to.equal(25);\r",
+							"});\r",
+							"pm.test(\"Valida a última raça retorna da página 1\", function () {\r",
+							"    const lastBreed = responseData.data[responseData.data.length - 1].breed;\r",
+							"    pm.expect(lastBreed).to.equal(\"Chausie\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar os campos retornado no data array\", function () {\r",
+							"    pm.response.json().data.forEach(item => {\r",
+							"        pm.expect(item.breed).to.be.a('string');\r",
+							"        pm.expect(item.country).to.be.a('string');\r",
+							"        pm.expect(item.origin).to.be.a('string');\r",
+							"        pm.expect(item.coat).to.be.a('string');\r",
+							"        pm.expect(item.pattern).to.be.a('string');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"// Extracting the 'active' value for the link with the label \"1\"\r",
+							"const linkOneActive = pm.response.json().links.find(link => link.label === \"1\").active;\r",
+							"\r",
+							"pm.test(\"Verifica que a paginação 1 esta ativa\", function () {\r",
+							"    pm.expect(linkOneActive).to.be.true;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/breeds",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"breeds"
+					]
+				},
+				"description": "Verificar API Cadastro  "
+			},
+			"response": []
+		},
+		{
+			"name": "[CT - 02] Busca apenas a lista de raça de gatos da pagina 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"  const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida a pagina atual é igual a 2\", function () {\r",
+							"    pm.expect(responseData.current_page).to.equal(2);\r",
+							"});\r",
+							"pm.test(\"Valida a quantidade de raças retornado na página 2\", function () {\r",
+							"    pm.expect(pm.response.json().data.length).to.equal(25);\r",
+							"});\r",
+							"pm.test(\"Valida a última raça retorna da página 2\", function () {\r",
+							"    const lastBreed = responseData.data[responseData.data.length - 1].breed;\r",
+							"    pm.expect(lastBreed).to.equal(\"Kurilian Bobtail, or Kuril Islands Bobtail\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida que a lista da pagina 2 começa no item 26 \", function () {\r",
+							"    pm.expect(responseData.from).to.equal(26);\r",
+							"});\r",
+							"\r",
+							"// Extracting the 'active' value for the link with the label \"2\"\r",
+							"const linkOneActive = pm.response.json().links.find(link => link.label === \"2\").active;\r",
+							"\r",
+							"pm.test(\"Verifica que a paginação 2 esta ativa\", function () {\r",
+							"    pm.expect(linkOneActive).to.be.true;\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/breeds?page=2",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"breeds"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				},
+				"description": "Verificar API Cadastro  "
+			},
+			"response": []
+		},
+		{
+			"name": "[CT - 03] Busca apenas a lista de raça de gatos da pagina 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"  const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida a pagina atual é igual a 3\", function () {\r",
+							"    pm.expect(responseData.current_page).to.equal(3);\r",
+							"});\r",
+							"pm.test(\"Valida a quantidade de raças retornado na página 3\", function () {\r",
+							"    pm.expect(pm.response.json().data.length).to.equal(25);\r",
+							"});\r",
+							"pm.test(\"Valida a última raça retorna da página 3\", function () {\r",
+							"    const lastBreed = responseData.data[responseData.data.length - 1].breed;\r",
+							"    pm.expect(lastBreed).to.equal(\"Russian Blue\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida que a lista da pagina 3 começa no item 51\", function () {\r",
+							"    pm.expect(responseData.from).to.equal(51);\r",
+							"});\r",
+							"\r",
+							"// Extracting the 'active' value for the link with the label \"3\"\r",
+							"const linkOneActive = pm.response.json().links.find(link => link.label === \"3\").active;\r",
+							"\r",
+							"pm.test(\"Verifica que a paginação 3 esta ativa\", function () {\r",
+							"    pm.expect(linkOneActive).to.be.true;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/breeds?page=3",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"breeds"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "3"
+						}
+					]
+				},
+				"description": "Verificar API Cadastro  "
+			},
+			"response": []
+		},
+		{
+			"name": "[CT - 04] Busca apenas a lista de raça de gatos da pagina 4",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"  const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida a pagina atual é igual a 4\", function () {\r",
+							"    pm.expect(responseData.current_page).to.equal(4);\r",
+							"});\r",
+							"pm.test(\"Valida a quantidade de raças retornado na página 4\", function () {\r",
+							"    pm.expect(pm.response.json().data.length).to.equal(23);\r",
+							"});\r",
+							"pm.test(\"Valida a última raça retorna da página 4\", function () {\r",
+							"    const lastBreed = responseData.data[responseData.data.length - 1].breed;\r",
+							"    pm.expect(lastBreed).to.equal(\"York Chocolate\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida que a lista da pagina 4 começa no item 76\", function () {\r",
+							"    pm.expect(responseData.from).to.equal(76);\r",
+							"});\r",
+							"\r",
+							"// Extracting the 'active' value for the link with the label \"4\"\r",
+							"const linkOneActive = pm.response.json().links.find(link => link.label === \"4\").active;\r",
+							"\r",
+							"pm.test(\"Verifica que a paginação 4 esta ativa\", function () {\r",
+							"    pm.expect(linkOneActive).to.be.true;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/breeds?page=4",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"breeds"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "4"
+						}
+					]
+				},
+				"description": "Verificar API Cadastro  "
+			},
+			"response": []
+		},
+		{
+			"name": "[CT - 05] Busca apenas a lista de raça de gatos da pagina 1 e limite = 45",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"  const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida a pagina atual é igual a 1\", function () {\r",
+							"    pm.expect(responseData.current_page).to.equal(1);\r",
+							"});\r",
+							"pm.test(\"Valida a quantidade de raças retornado na página 1 é iqual a 45\", function () {\r",
+							"    pm.expect(pm.response.json().data.length).to.equal(45);\r",
+							"});\r",
+							"pm.test(\"Valida a última raça retorna da página 1\", function () {\r",
+							"    const lastBreed = responseData.data[responseData.data.length - 1].breed;\r",
+							"    pm.expect(lastBreed).to.equal(\"Karelian Bobtail\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida que a lista da pagina 1 começa no item 1 \", function () {\r",
+							"    pm.expect(responseData.from).to.equal(1);\r",
+							"});\r",
+							"\r",
+							"// Extracting the 'active' value for the link with the label \"1\"\r",
+							"const linkOneActive = pm.response.json().links.find(link => link.label === \"1\").active;\r",
+							"\r",
+							"pm.test(\"Verifica que a paginação 1 esta ativa\", function () {\r",
+							"    pm.expect(linkOneActive).to.be.true;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida que a última página é igual a 3\", function () {\r",
+							"    pm.expect(responseData.last_page).to.equal(3);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "const responseData = pm.response.json();\r\n\r\npm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Valida a pagina atual é igual a 1\", function () {\r\n    pm.expect(responseData.current_page).to.equal(1);\r\n});\r\npm.test(\"Valida a quantidade de raças retornado na página 1\", function () {\r\n    pm.expect(pm.response.json().data.length).to.equal(45);\r\n});\r\npm.test(\"Valida a última raça retorna da página 1\", function () {\r\n    const lastBreed = responseData.data[responseData.data.length - 1].breed;\r\n    pm.expect(lastBreed).to.equal(\"Chausie\");\r\n});\r\n\r\npm.test(\"Validar os campos retornado no data array\", function () {\r\n    pm.response.json().data.forEach(item => {\r\n        pm.expect(item.breed).to.be.a('string');\r\n        pm.expect(item.country).to.be.a('string');\r\n        pm.expect(item.origin).to.be.a('string');\r\n        pm.expect(item.coat).to.be.a('string');\r\n        pm.expect(item.pattern).to.be.a('string');\r\n    });\r\n});\r\n\r\n// Extracting the 'active' value for the link with the label \"1\"\r\nconst linkOneActive = pm.response.json().links.find(link => link.label === \"1\").active;\r\n\r\npm.test(\"Verifica que a paginação 1 esta ativa\", function () {\r\n    pm.expect(linkOneActive).to.be.true;\r\n});\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/breeds?page=1&limit=45",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"breeds"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "45"
+						}
+					]
+				},
+				"description": "Verificar API Cadastro  "
+			},
+			"response": []
+		},
+		{
+			"name": "[CT - 06] Busca com limite de 30 raças de gato por pagina",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"  const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida a pagina atual é igual a 1\", function () {\r",
+							"    pm.expect(responseData.current_page).to.equal(1);\r",
+							"});\r",
+							"pm.test(\"Valida a quantidade de raças retornado na página 1 é iqual a 30\", function () {\r",
+							"    pm.expect(pm.response.json().data.length).to.equal(30);\r",
+							"});\r",
+							"pm.test(\"Valida a última raça retorna da página 1\", function () {\r",
+							"    const lastBreed = responseData.data[responseData.data.length - 1].breed;\r",
+							"    pm.expect(lastBreed).to.equal(\"Cyprus\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida que a lista da pagina 1 começa no item 1 \", function () {\r",
+							"    pm.expect(responseData.from).to.equal(1);\r",
+							"});\r",
+							"\r",
+							"// Extracting the 'active' value for the link with the label \"1\"\r",
+							"const linkOneActive = pm.response.json().links.find(link => link.label === \"1\").active;\r",
+							"\r",
+							"pm.test(\"Verifica que a paginação 1 esta ativa\", function () {\r",
+							"    pm.expect(linkOneActive).to.be.true;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida que a última página é igual a 4\", function () {\r",
+							"    pm.expect(responseData.last_page).to.equal(4);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/breeds?limit=30",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"breeds"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "30"
+						}
+					]
+				},
+				"description": "Verificar API Cadastro  "
+			},
+			"response": []
+		},
+		{
+			"name": "[CT - 07] Busca com limite de 1 raças de gato por pagina",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"  const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida a pagina atual é igual a 1\", function () {\r",
+							"    pm.expect(responseData.current_page).to.equal(1);\r",
+							"});\r",
+							"pm.test(\"Valida a quantidade de raças retornado na página 1 é iqual a 1\", function () {\r",
+							"    pm.expect(pm.response.json().data.length).to.equal(1);\r",
+							"});\r",
+							"pm.test(\"Valida a última raça retorna da página 1\", function () {\r",
+							"    const lastBreed = responseData.data[responseData.data.length - 1].breed;\r",
+							"    pm.expect(lastBreed).to.equal(\"Abyssinian\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida que a lista da pagina 1 começa no item 1 \", function () {\r",
+							"    pm.expect(responseData.from).to.equal(1);\r",
+							"});\r",
+							"\r",
+							"// Extracting the 'active' value for the link with the label \"1\"\r",
+							"const linkOneActive = pm.response.json().links.find(link => link.label === \"1\").active;\r",
+							"\r",
+							"pm.test(\"Verifica que a paginação 1 esta ativa\", function () {\r",
+							"    pm.expect(linkOneActive).to.be.true;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida que a última página é igual a 98\", function () {\r",
+							"    pm.expect(responseData.last_page).to.equal(98);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/breeds?limit=1",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"breeds"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1"
+						}
+					]
+				},
+				"description": "Verificar API Cadastro  "
+			},
+			"response": []
+		},
+		{
+			"name": "[CT - 08] Busca com limite de 98 raças de gatos por pagina",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"  const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida a pagina atual é igual a 1\", function () {\r",
+							"    pm.expect(responseData.current_page).to.equal(1);\r",
+							"});\r",
+							"pm.test(\"Valida a quantidade de raças retornado na página 1 é iqual a 1000\", function () {\r",
+							"    pm.expect(pm.response.json().data.length).to.equal(98);\r",
+							"});\r",
+							"pm.test(\"Valida a última raça retorna da página 1\", function () {\r",
+							"    const lastBreed = responseData.data[responseData.data.length - 1].breed;\r",
+							"    pm.expect(lastBreed).to.equal(\"York Chocolate\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida que a lista da pagina 1 começa no item 1 \", function () {\r",
+							"    pm.expect(responseData.from).to.equal(1);\r",
+							"});\r",
+							"\r",
+							"// Extracting the 'active' value for the link with the label \"1\"\r",
+							"const linkOneActive = pm.response.json().links.find(link => link.label === \"1\").active;\r",
+							"\r",
+							"pm.test(\"Verifica que a paginação 1 esta ativa\", function () {\r",
+							"    pm.expect(linkOneActive).to.be.true;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida que a última página é igual a 1\", function () {\r",
+							"    pm.expect(responseData.last_page).to.equal(1);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/breeds?limit=98",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"breeds"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "98"
+						}
+					]
+				},
+				"description": "Verificar API Cadastro  "
+			},
+			"response": []
+		},
+		{
+			"name": "[CT - 09] Busca com limite de 100 raças de gatos por pagina",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"  const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida a pagina atual é igual a 1\", function () {\r",
+							"    pm.expect(responseData.current_page).to.equal(1);\r",
+							"});\r",
+							"pm.test(\"Valida a quantidade de raças retornado na página 1 é iqual a 98\", function () {\r",
+							"    pm.expect(pm.response.json().data.length).to.equal(98);\r",
+							"});\r",
+							"pm.test(\"Valida a última raça retorna da página 1\", function () {\r",
+							"    const lastBreed = responseData.data[responseData.data.length - 1].breed;\r",
+							"    pm.expect(lastBreed).to.equal(\"York Chocolate\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida que a lista da pagina 1 começa no item 1 \", function () {\r",
+							"    pm.expect(responseData.from).to.equal(1);\r",
+							"});\r",
+							"\r",
+							"// Extracting the 'active' value for the link with the label \"1\"\r",
+							"const linkOneActive = pm.response.json().links.find(link => link.label === \"1\").active;\r",
+							"\r",
+							"pm.test(\"Verifica que a paginação 1 esta ativa\", function () {\r",
+							"    pm.expect(linkOneActive).to.be.true;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida que a última página é igual a 1\", function () {\r",
+							"    pm.expect(responseData.last_page).to.equal(1);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/breeds?limit=100",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"breeds"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "100"
+						}
+					]
+				},
+				"description": "Verificar API Cadastro  "
+			},
+			"response": []
+		},
+		{
+			"name": "[CT - 10] Busca apenas raça de gato onde pais é igual a França",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//API não não retorna consulta especifica por pais \r",
+							"\r",
+							"pm.sendRequest(\"https://catfact.ninja/breeds\", function (err, response) {\r",
+							"  if (err) {\r",
+							"    console.error(\"Error:\", err);\r",
+							"  } else {\r",
+							"    const data = response.json();\r",
+							"    const filteredBreeds = data.data.filter(breed => breed.country.includes(\"France\"));\r",
+							"    console.log(filteredBreeds);\r",
+							"  }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/breeds?country=France",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"breeds"
+					],
+					"query": [
+						{
+							"key": "country",
+							"value": "France"
+						}
+					]
+				},
+				"description": "Verificar API Cadastro  "
+			},
+			"response": []
+		},
+		{
+			"name": "[CT- 11]Busca com limite = 0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"  const responseData = pm.response.json();\r",
+							"\r",
+							"  // Validar se deveria retornar lista vazia ao invez de 15 raças \r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verificar que é retornado lista vazia\", function () {\r",
+							"    pm.expect(pm.response.json().data).to.be.an('array').that.is.empty;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/breeds?limit=0",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"breeds"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "0"
+						}
+					]
+				},
+				"description": "Verificar API Cadastro  "
+			},
+			"response": []
+		},
+		{
+			"name": "[CT- 12]Busca com limite negativo -1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Deveria retornar mensagem de erro  400 (Bad Request) porém retorna 404\r",
+							"\r",
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"pm.test(\"Validar a mensagem e code retornado\", function () {\r",
+							"    pm.response.to.have.jsonBody('message', 'Bad Request');\r",
+							"    pm.response.to.have.jsonBody('code', 400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/breeds?limit=-1",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"breeds"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "-1"
+						}
+					]
+				},
+				"description": "Verificar API Cadastro  "
+			},
+			"response": []
+		},
+		{
+			"name": "[CT - 13]Busca com pagina negativa -4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"// pm.test(\"Status code is 404\", function () {\r",
+							"//     pm.response.to.have.status(400);\r",
+							"// });\r",
+							"// pm.test(\"Validar a mensagem e code retornado\", function () {\r",
+							"//     pm.response.to.have.jsonBody('message', 'Bad Request');\r",
+							"//     pm.response.to.have.jsonBody('code', 400);\r",
+							"// });\r",
+							"\r",
+							"// Validar se esse retorno esta correto e a API esta sendo tratada ao realizar busca de paginação negativa retornando sempre 25 itens \r",
+							"\r",
+							"  const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida a pagina atual é igual a 1\", function () {\r",
+							"    pm.expect(responseData.current_page).to.equal(1);\r",
+							"});\r",
+							"pm.test(\"Valida a quantidade de raças retornado na página 1\", function () {\r",
+							"    pm.expect(pm.response.json().data.length).to.equal(25);\r",
+							"});\r",
+							"pm.test(\"Valida a última raça retorna da página 1\", function () {\r",
+							"    const lastBreed = responseData.data[responseData.data.length - 1].breed;\r",
+							"    pm.expect(lastBreed).to.equal(\"Chausie\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar os campos retornado no data array\", function () {\r",
+							"    pm.response.json().data.forEach(item => {\r",
+							"        pm.expect(item.breed).to.be.a('string');\r",
+							"        pm.expect(item.country).to.be.a('string');\r",
+							"        pm.expect(item.origin).to.be.a('string');\r",
+							"        pm.expect(item.coat).to.be.a('string');\r",
+							"        pm.expect(item.pattern).to.be.a('string');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"// Extracting the 'active' value for the link with the label \"1\"\r",
+							"const linkOneActive = pm.response.json().links.find(link => link.label === \"1\").active;\r",
+							"\r",
+							"pm.test(\"Verifica que a paginação 1 esta ativa\", function () {\r",
+							"    pm.expect(linkOneActive).to.be.true;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/breeds?page=-1",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"breeds"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "-1"
+						}
+					]
+				},
+				"description": "Verificar API Cadastro  "
+			},
+			"response": []
+		},
+		{
+			"name": "[CT - 14 ]Busca com pagina Zerada",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"// pm.test(\"Status code is 404\", function () {\r",
+							"//     pm.response.to.have.status(400);\r",
+							"// });\r",
+							"// pm.test(\"Validar a mensagem e code retornado\", function () {\r",
+							"//     pm.response.to.have.jsonBody('message', 'Bad Request');\r",
+							"//     pm.response.to.have.jsonBody('code', 400);\r",
+							"// });\r",
+							"\r",
+							"// Validar se esse retorno esta correto e a API esta sendo tratada ao realizar busca de paginação negativa e zerada retornando sempre 25 itens \r",
+							"\r",
+							"  const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida a pagina atual é igual a 1\", function () {\r",
+							"    pm.expect(responseData.current_page).to.equal(1);\r",
+							"});\r",
+							"pm.test(\"Valida a quantidade de raças retornado na página 1\", function () {\r",
+							"    pm.expect(pm.response.json().data.length).to.equal(25);\r",
+							"});\r",
+							"pm.test(\"Valida a última raça retorna da página 1\", function () {\r",
+							"    const lastBreed = responseData.data[responseData.data.length - 1].breed;\r",
+							"    pm.expect(lastBreed).to.equal(\"Chausie\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar os campos retornado no data array\", function () {\r",
+							"    pm.response.json().data.forEach(item => {\r",
+							"        pm.expect(item.breed).to.be.a('string');\r",
+							"        pm.expect(item.country).to.be.a('string');\r",
+							"        pm.expect(item.origin).to.be.a('string');\r",
+							"        pm.expect(item.coat).to.be.a('string');\r",
+							"        pm.expect(item.pattern).to.be.a('string');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"// Extracting the 'active' value for the link with the label \"1\"\r",
+							"const linkOneActive = pm.response.json().links.find(link => link.label === \"1\").active;\r",
+							"\r",
+							"pm.test(\"Verifica que a paginação 1 esta ativa\", function () {\r",
+							"    pm.expect(linkOneActive).to.be.true;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/breeds?page=0",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"breeds"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						}
+					]
+				},
+				"description": "Verificar API Cadastro  "
+			},
+			"response": []
+		},
+		{
+			"name": "[CT - 15 ]Busca com pagina = 999",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valida a paginaçãoretornado é 999\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.current_page).to.equal(999);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verificar que é retornado lista vazia\", function () {\r",
+							"    pm.expect(pm.response.json().data).to.be.an('array').that.is.empty;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/breeds?page=999",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"breeds"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "999"
+						}
+					]
+				},
+				"description": "Verificar API Cadastro  "
+			},
+			"response": []
+		}
+	]
+}

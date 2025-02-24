@@ -1,15 +1,14 @@
 # Cat Breeds API Validation
 
-Este projeto foi criado para validar a API de raças de gatos.
-O foco principal foi validar a API pública Cat Facts API (https://catfact.ninja/),é verificar a resposta da API para diferentes cenários de paginação e limites de resposta. do endpoint GET “/breeds”.
+Este projeto foi criado para validar a API  Cat Breeds.
+O foco principal foi validar a API pública Cat Facts API (https://catfact.ninja/),é verificar a resposta da API para diferentes cenários de paginação e limites de resposta do endpoint GET “/breeds”.
 
 ## Requisitos
 
 - Python 3.11.8
-- Selenium
-- Requests
-- Behave
-- Allure
+- Requests 2.32.3
+- Behave 1.2.6
+- Allure 2.27.0
 
 ## Instalação
 
@@ -34,13 +33,16 @@ allure/ - Relatórios gerados pelo Allure.
 1. Execute os testes com o Behave:
 
     ```bash
-    behave
-- Dentro da pasta '\tests'
+    behave ou 
+    behave --format allure_behave.formatter:AllureFormatter --outfile=allure-results
+
+    - Dentro da pasta '\tests'
 
 2. Para gerar o relatório do Allure após os testes:
 
     ```bash
-    allure serve allure-results
+    allure generate allure-results -o reports/html --clean
+
 
 ## Exemplos de Cenários de Teste
 
@@ -70,7 +72,7 @@ allure/ - Relatórios gerados pelo Allure.
 * A última breed encontrada deve "serKarelian Bobtail"
 * A última pagina é 3
 
-5. Validação da resposta da com limit = 1
+5. Validação da resposta com limit = 1
 
 * Valida que deve ser retornado apenas 1 breed na pagina 1
 
